@@ -1,674 +1,375 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <title>Tashi – Speisekarte</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Tashi – Speisekarte</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      margin: 0;
-      background: #0a0a0a;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      overflow-x: hidden;
-    }
+<style>
+* { box-sizing: border-box; }
 
-    /* Label-Farben */
-    .vegan {
-      color: #6ee86e;
-      font-weight: bold;
-    }
+body {
+  margin: 0;
+  background: #ffffff;
+  color: #222;
+  font-family: Arial, sans-serif;
+}
 
-    .veggie {
-      color: #9aff8a;
-      font-weight: bold;
-    }
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 20px 40px;
+  max-width: 95vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255,255,255,0.9);
+  border-bottom: 1px solid #e6e2da;
+  z-index: 100;
+}
 
-    /* NAVIGATION TOP */
-    .navbar {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      padding: 26px 60px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(8px);
-      z-index: 100;
-    }
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
 
-    .logo-area {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
+.logo-img { height: 55px; }
 
-    .logo-img {
-      height: 50px;
-      width: auto;
-    }
+.logo-text {
+  font-size: 14px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #444;
+}
 
-    .logo-text {
-      text-transform: uppercase;
-      font-size: 14px;
-      letter-spacing: 0.18em;
-      color: #c9c9c9;
-    }
+.nav-links {
+  display: flex;
+  gap: 32px;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 0.12em;
+}
 
-    .nav-links {
-      display: flex;
-      gap: 30px;
-      margin-right: 100px;
-      margin-left: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.10em;
-      font-size: 14px;
-    }
+.nav-links a {
+  color: #333;
+  text-decoration: none;
+}
 
-    .nav-links a {
-      color: #fff;
-      text-decoration: none;
-      position: relative;
-    }
+.header {
+  padding-top: 160px;
+  text-align: center;
+  margin-bottom: 60px;
+}
 
-    .nav-links a::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -3px;
-      width: 0;
-      height: 1px;
-      background: #d8b24e;
-      transition: 0.3s;
-    }
+.header h1 {
+  font-size: 46px;
+  letter-spacing: 0.18em;
+}
 
-    .nav-links a:hover::after {
-      width: 100%;
-    }
+.header p {
+  color: #666;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  font-size: 14px;
+  margin-top: 10px;
+}
 
-    /* HEADER SECTION */
-    .menu-header {
-      margin-top: 180px;
-      text-align: center;
-      padding: 20px;
-    }
+.section {
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
 
-    .menu-header h1 {
-      font-size: 48px;
-      letter-spacing: 0.18em;
-      margin-bottom: 10px;
-    }
+.section h2 {
+  color: #c6a04f;
+  font-size: 26px;
+  letter-spacing: 0.14em;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 8px;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+}
 
-    .menu-header p {
-      color: #cfcfcf;
-      letter-spacing: 0.2em;
-    }
+.item {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+  font-size: 17px;
+}
 
-    /* BACK TO HOME BUTTON */
-    .back-btn {
-      display: inline-block;
-      margin-top: 25px;
-      padding: 12px 28px;
-      border-radius: 30px;
-      border: 1px solid #d8b24e;
-      background: transparent;
-      color: #d8b24e;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      font-size: 13px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: 0.3s;
-    }
+.desc {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 8px;
+}
 
-    .back-btn:hover {
-      background: #d8b24e;
-      color: #000;
-    }
+.price {
+  font-weight: bold;
+  white-space: nowrap;
+}
 
-    /* MENU SECTIONS */
-    .section {
-      max-width: 900px;
-      margin: 80px auto;
-      padding: 0 20px;
-    }
+.small {
+  font-size: 13px;
+  color: #666;
+  margin-top: 20px;
+  line-height: 1.6;
+}
 
-    .section-title {
-      font-size: 28px;
-      margin-bottom: 10px;
-      letter-spacing: 0.15em;
-      color: #d8b24e;
-      text-transform: uppercase;
-      border-bottom: 1px solid #333;
-      padding-bottom: 8px;
-    }
+.back {
+  text-align: center;
+  margin: 80px 0 120px;
+}
 
-    .menu-item {
-      margin: 18px 0;
-      display: flex;
-      justify-content: space-between;
-      gap: 40px;
-      font-size: 18px;
-    }
-
-    .item-text {
-      max-width: 620px;
-    }
-
-    .item-name {
-      color: #fff;
-      display: block;
-    }
-
-    .item-desc {
-      color: #cfcfcf;
-      font-size: 14px;
-      margin-top: 4px;
-    }
-
-    .price {
-      color: #fff;
-      font-weight: bold;
-      white-space: nowrap;
-    }
-
-    hr {
-      border: none;
-      border-bottom: 1px solid #222;
-      margin: 40px 0;
-    }
-
-    .note {
-      font-size: 14px;
-      color: #a7a7a7;
-      margin-top: 6px;
-    }
-  </style>
+.back a {
+  padding: 14px 32px;
+  border-radius: 30px;
+  border: 2px solid #c6a04f;
+  background: transparent;
+  color: #c6a04f;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+</style>
 </head>
 
 <body>
 
-  <!-- NAVBAR -->
-  <header class="navbar">
-    <div class="logo-area">
-      <img src="tashi_logo.jpeg" class="logo-img" alt="Tashi Logo">
-      <div class="logo-text">Tibetische Küche</div>
-    </div>
+<header class="navbar">
+  <div class="logo-area">
+    <img src="tashi_logo.jpeg" class="logo-img">
+    <div class="logo-text">Tibetische Küche</div>
+  </div>
+  <nav class="nav-links">
+    <a href="website.html">Home</a>
+    <a href="menu.html">Speisekarte</a>
+  </nav>
+</header>
 
-    <nav class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="menu.html">Speisekarte</a>
-    </nav>
-  </header>
+<div class="header">
+  <h1>SPEISEKARTE</h1>
+  <p>Tibetische & Koreanische Küche</p>
+</div>
 
+<!-- VORSPEISEN -->
+<div class="section">
+<h2>Vorspeisen</h2>
 
-  <!-- MENU HEADER -->
-  <section class="menu-header">
-    <h1>SPEISEKARTE</h1>
-    <p>TIBETISCHE & KOREANISCHE KÜCHE</p>
+<div class="item"><span>Kimchisuppe mit Tofu</span><span class="price">4,90 €</span></div>
+<div class="desc">4, 6, 9, 11, 12, D</div>
 
-    <!-- BACK TO HOME BUTTON (jetzt korrekt auf index.html) -->
-    <a href="index.html" class="back-btn">Zurück zur Startseite</a>
-  </section>
+<div class="item"><span>Edamame vegan</span><span class="price">4,50 €</span></div>
+<div class="desc">gedämpfte japanische Sojabohnen 6, 11</div>
 
+<div class="item"><span>Kimchi</span><span class="price">4,50 €</span></div>
+<div class="desc">koreanischer fermentierter Chinakohl 4, 11, 12</div>
 
-  <!-- VORSPEISEN -->
-  <section class="section">
-    <div class="section-title">Vorspeisen</div>
+<div class="item"><span>Wakame Salat vegan</span><span class="price">4,50 €</span></div>
+<div class="desc">Algensalat 11</div>
+</div>
 
-    <div class="menu-item">
-      <div class="item-text">
-        <span class="item-name">Kimchisuppe mit Tofu</span>
-      </div>
-      <span class="price">4,90 €</span>
-    </div>
+<!-- TIBETISCHE HAUPTSPEISEN -->
+<div class="section">
+<h2>Tibetische Hauptspeisen</h2>
 
-    <div class="menu-item">
-      <div class="item-text">
-        <span class="item-name">Edamame <span class="vegan">vegan</span></span>
-        <span class="item-desc">gedämpfte japanische Sojabohnen</span>
-      </div>
-      <span class="price">4,50 €</span>
-    </div>
+<div class="item"><span>20 Momo (10 Stk.)</span><span class="price">14,90 €</span></div>
+<div class="desc">hausgemachte Teigtaschen mit Rinderhackfleisch, Zwiebel und Frühlingszwiebel, mit Soße nach Wahl 1</div>
 
-    <div class="menu-item">
-      <div class="item-text">
-        <span class="item-name">Kimchi</span>
-        <span class="item-desc">koreanischer fermentierter Chinakohl</span>
-      </div>
-      <span class="price">4,50 €</span>
-    </div>
+<div class="item"><span>21 Vegetarische Momo vegan</span><span class="price">13,90 €</span></div>
+<div class="desc">hausgemachte gedämpfte Teigtaschen mit Gemüse und Tofu, mit Soße nach Wahl 1, 6</div>
 
-    <div class="menu-item">
-      <div class="item-text">
-        <span class="item-name">Wakame Salat <span class="vegan">vegan</span></span>
-        <span class="item-desc">Algensalat</span>
-      </div>
-      <span class="price">4,50 €</span>
-    </div>
-  </section>
+<div class="item"><span>22 Gebratene Momo</span><span class="price">15,90 €</span></div>
+<div class="desc">mit Soße nach Wahl 1</div>
 
-  <hr>
+<div class="item"><span>23 Gebratene vegetarische Momo vegan</span><span class="price">13,90 €</span></div>
+<div class="desc">mit Soße nach Wahl 1, 6</div>
 
+<div class="item"><span>24 Thukpa</span><span class="price">13,90 €</span></div>
+<div class="desc">Rindersuppe mit Nudeln, Rinderhack und Gemüse 1, 6, 9, 11, D</div>
 
-  <!-- TIBETISCHE HAUPTSPEISEN -->
-  <section class="section">
-    <div class="section-title">Tibetische Hauptspeisen</div>
+<div class="item"><span>25 Vegetarische Thukpa vegan</span><span class="price">12,90 €</span></div>
+<div class="desc">Gemüsebrühe mit Nudeln, Tofu und Gemüse 1, 6, 9, 11, D</div>
 
-    <div class="menu-item">
-      <div class="item-text">
-        <span class="item-name">Momo (10 Stk.)</span>
-        <span class="item-desc">
-          hausgemachte Teigtaschen mit Rinderhack, Zwiebeln und Frühlingszwiebeln, mit Soße nach Wahl
-        </span>
-      </div>
-      <span class="price">14,90 €</span>
-    </div>
+<div class="item"><span>26 Shapta</span><span class="price">15,90 €</span></div>
+<div class="desc">gebratener Schweinebauch mit Paprika, Karotte, Zucchini und Zwiebel, dazu Reis oder Bhakleb 1, 9, 11</div>
+</div>
 
-    <div class="menu-item">
-      <div class="item-text">
-        <span class="item-name">Vegetarische Momo <span class="vegan">vegan</span> (10 Stk.)</span>
-        <span class="item-desc">
-          gedämpfte Teigtaschen mit Gemüse und Tofu, mit Soße nach Wahl
-        </span>
-      </div>
-      <span class="price">13,90 €</span>
-    </div>
+<!-- KOREAN -->
+<div class="section">
+<h2>Koreanische Hauptspeisen</h2>
 
-    <div class="menu-item">
-      <div class="item-text">
-        <span class="item-name">Gebratene Momo</span>
-        <span class="item-desc">knusprig gebratene Momo, mit Soße nach Wahl</span>
-      </div>
-      <span class="price">15,90 €</span>
-    </div>
+<div class="item"><span>40 Tofu Bokum vegan</span><span class="price">13,90 €</span></div>
+<div class="desc">Tofu mit Gemüse, mit Reis 6, 11, D, F</div>
 
-    <div class="menu-item">
-      <div class="item-text">
-        <span class="item-name">Gebratene vegetarische Momo <span class="vegan">vegan</span></span>
-        <span class="item-desc">gebratene, vegetarische Teigtaschen mit Soße nach Wahl</span>
-      </div>
-      <span class="price">13,90 €</span>
-    </div>
+<div class="item"><span>41 Tteokbokki vegan</span><span class="price">12,90 €</span></div>
+<div class="desc">koreanische Reiskuchen in scharfer Soße 6, 11, D, F</div>
 
-    <div class="menu-item">
-      <div class="item-text">
-        <span class="item-name">Thukpa</span>
-        <span class="item-desc">herzhafte Nudelsuppe mit Rindfleisch und Gemüse</span>
-      </div>
-      <span class="price">13,90 €</span>
-    </div>
+<div class="item"><span>42 Sun Tofu Jjigae</span><span class="price">14,90 €</span></div>
+<div class="desc">koreanischer Eintopf mit Seidentofu, Gemüse und Reis 1, 4, 6, 9, 11, D, F</div>
 
-    <div class="menu-item">
-      <div class="item-text">
-        <span class="item-name">Vegetarische Thukpa <span class="vegan">vegan</span></span>
-        <span class="item-desc">Gemüsebrühe mit Nudeln, Tofu und Gemüse</span>
-      </div>
-      <span class="price">12,90 €</span>
-    </div>
+<div class="item"><span>43 Sun Tofu Jjigae mit Meeresfrüchten</span><span class="price">16,90 €</span></div>
+<div class="desc">mit Seidentofu, Gemüse, Meeresfrüchten und Reis 2, 4, 6, 9, 11, 14, D, F</div>
+</div>
 
-    <div class="menu-item">
-      <div class="item-text">
-        <span class="item-name">Shapta</span>
-        <span class="item-desc">gebratener Schweinebauch mit Gemüse, dazu Reis oder Bhakleb</span>
-      </div>
-      <span class="price">15,90 €</span>
-    </div>
+<!-- BOWLS -->
+<div class="section">
+<h2>Bowls</h2>
 
-    <div class="note">
-      Momo-Soßen zur Auswahl: Tomaten-Chili-Soße, Chiliöl mit Sesam, Sojasoße mit Sesam & Knoblauch, Ketchup.
-    </div>
-  </section>
+<div class="item"><span>44 Karaage Poke Bowl</span><span class="price">15,90 €</span></div>
+<div class="desc">Reis, Gemüse, Erdnüsse, Karaage (Hähnchen), Soße 1, 4, 5, 6, 9, 11, D, F</div>
 
-  <hr>
+<div class="item"><span>45 Vegetarischer Poke Bowl vegan</span><span class="price">13,90 €</span></div>
+<div class="desc">Reis, Gemüse, Erdnüsse und Soße 5, 6, 9, 11</div>
+</div>
 
+<!-- NACHSPEISEN -->
+<div class="section">
+  <h2>Nachspeisen</h2>
 
-  <!-- KOREANISCHE HAUPTSPEISEN -->
-  <section class="section">
-    <div class="section-title">Koreanische Hauptspeisen</div>
+  <div class="item">
+    <span>Mochi Eis (2 Stück)</span>
+    <span class="price">5,50 €</span>
+  </div>
+  <div class="desc">japanisches Reiskucheneis mit Matcha oder Vanille Geschmack</div>
 
-    <div class="menu-item">
-      <div class="item-text">
-        <span class="item-name">Tofu Bokum <span class="vegan">vegan</span></span>
-        <span class="item-desc">Tofu mit Gemüse nach koreanischer Art gebraten, dazu Reis</span>
-      </div>
-      <span class="price">13,90 €</span>
-    </div>
+  <div class="item">
+    <span>Eis Kugel (Vanille oder Schokolade)</span>
+    <span class="price">2,00 €</span>
+  </div>
+</div>
 
-    <div class="menu-item">
-      <div class="item-text">
-        <span class="item-name">Tteokbokki <span class="vegan">vegan</span></span>
-        <span class="item-desc">koreanische Reiskuchen in scharfer Soße</span>
-      </div>
-      <span class="price">12,90 €</span>
-    </div>
-
-    <div class="menu-item">
-      <div class="item-text">
-        <span class="item-name">Sun Tofu Jjigae</span>
-        <span class="item-desc">koreanischer Eintopf mit Seidentofu, Gemüse und Reis</span>
-      </div>
-      <span class="price">14,90 €</span>
-    </div>
-
-    <div class="menu-item">
-      <div class="item-text">
-        <span class="item-name">Sun Tofu Jjigae mit Meeresfrüchten</span>
-        <span class="item-desc">Eintopf mit Seidentofu, Gemüse, Meeresfrüchten und Reis</span>
-      </div>
-      <span class="price">16,90 €</span>
-    </div>
-  </section>
-
-  <hr>
-
-
-  <!-- BOWLS -->
-  <section class="section">
-    <div class="section-title">Bowls</div>
-
-    <div class="menu-item">
-      <div class="item-text">
-        <span class="item-name">Karaage Poke Bowl</span>
-        <span class="item-desc">Reis mit Gemüse, Erdnüssen und Karaage-Hähnchen, mit Soße</span>
-      </div>
-      <span class="price">15,90 €</span>
-    </div>
-
-    <div class="menu-item">
-      <div class="item-text">
-        <span class="item-name">Vegetarischer Poke Bowl <span class="vegan">vegan</span></span>
-        <span class="item-desc">Reis mit verschiedenem Gemüse, Erdnüssen und Soße</span>
-      </div>
-      <span class="price">13,90 €</span>
-    </div>
-
-    <div class="note">
-      Bowls wahlweise mit Sriracha-Mayo oder Mangosoße.
-    </div>
-  </section>
-
-  <hr>
-
-
-  <!-- KINDERTELLER -->
-  <section class="section">
-    <div class="section-title">Kinderteller (bis 12 Jahre)</div>
-
-    <div class="menu-item">
-      <div class="item-text">
-        <span class="item-name">4 Stk. Momo mit Ketchup</span>
-      </div>
-      <span class="price">6,90 €</span>
-    </div>
-
-    <div class="menu-item">
-      <div class="item-text">
-        <span class="item-name">4 Stk. vegetarische Momo <span class="vegan">vegan</span> mit Ketchup</span>
-      </div>
-      <span class="price">6,50 €</span>
-    </div>
-
-    <div class="menu-item">
-      <div class="item-text">
-        <span class="item-name">Halbe Portion Thukpa mit Fleisch</span>
-      </div>
-      <span class="price">6,90 €</span>
-    </div>
-
-    <div class="menu-item">
-      <div class="item-text">
-        <span class="item-name">Halbe Portion vegetarische Thukpa <span class="vegan">vegan</span></span>
-      </div>
-      <span class="price">6,50 €</span>
-    </div>
-  </section>
-
-  <hr>
-
-
-  <!-- EXTRAS -->
-  <section class="section">
-    <div class="section-title">Extras</div>
-
-    <div class="menu-item">
-      <div class="item-text"><span class="item-name">Extra Portion Reis</span></div>
-      <span class="price">3,00 €</span>
-    </div>
-
-    <div class="menu-item">
-      <div class="item-text"><span class="item-name">Extra Bhakleb (Brotfladen)</span></div>
-      <span class="price">2,00 €</span>
-    </div>
-
-    <div class="menu-item">
-      <div class="item-text"><span class="item-name">Extra Portion Soße</span></div>
-      <span class="price">1,00 €</span>
-    </div>
-  </section>
-
-  <hr>
-
-
-  <!-- DESSERTS -->
-  <section class="section">
-    <div class="section-title">Desserts</div>
-
-    <div class="menu-item">
-      <div class="item-text">
-        <span class="item-name">Mochi Eis (2 Stk.)</span>
-        <span class="item-desc">Eiscreme (z. B. Vanille oder Matcha) umhüllt mit süßem Reisteig</span>
-      </div>
-      <span class="price">5,50 €</span>
-    </div>
-
-    <div class="menu-item">
-      <div class="item-text">
-        <span class="item-name">Eisbecher pro Kugel</span>
-        <span class="item-desc">Vanille oder Schokolade</span>
-      </div>
-      <span class="price">2,00 €</span>
-    </div>
-  </section>
-
-  <hr>
-
+<!-- GETRÄNKE -->
+<div class="section">
+  <h2>Getränke</h2>
 
   <!-- HEISSE GETRÄNKE -->
-  <section class="section">
-    <div class="section-title">Heiße Getränke</div>
+  <div class="note"><b>Heiße Getränke</b></div>
 
-    <div class="menu-item">
-      <div class="item-text">
-        <span class="item-name">Süßer Jha</span>
-        <span class="item-desc">tibetischer süßer Tee mit Milch, Kardamom und Ingwer</span>
-      </div>
-      <span class="price">3,00 €</span>
-    </div>
+  <div class="item">
+    <span>Süßer Jha – tibetischer süßer Tee mit Milch, Kardamom und Ingwer</span>
+    <span class="price">Tasse · 3,00 €</span>
+  </div>
 
-    <div class="menu-item"><div class="item-text"><span class="item-name">Darjeeling Tee</span></div><span class="price">2,80 €</span></div>
-    <div class="menu-item"><div class="item-text"><span class="item-name">Grüner Tee</span></div><span class="price">2,80 €</span></div>
-    <div class="menu-item"><div class="item-text"><span class="item-name">Jasmin Tee</span></div><span class="price">2,80 €</span></div>
-    <div class="menu-item"><div class="item-text"><span class="item-name">Pfefferminz Tee</span></div><span class="price">2,80 €</span></div>
-    <div class="menu-item"><div class="item-text"><span class="item-name">Kaffee</span></div><span class="price">2,90 €</span></div>
-    <div class="menu-item"><div class="item-text"><span class="item-name">Espresso</span></div><span class="price">2,50 €</span></div>
-  </section>
+  <div class="item"><span>Darjeeling Tee</span><span class="price">Tasse · 2,80 €</span></div>
+  <div class="item"><span>Grüner Tee</span><span class="price">Tasse · 2,80 €</span></div>
+  <div class="item"><span>Jasmin Tee</span><span class="price">Tasse · 2,80 €</span></div>
+  <div class="item"><span>Pfefferminz Tee</span><span class="price">Tasse · 2,80 €</span></div>
 
-  <hr>
+  <div class="item"><span>Kaffee</span><span class="price">Tasse · 2,90 €</span></div>
+  <div class="item"><span>Espresso</span><span class="price">Tasse · 2,50 €</span></div>
+</div>
 
-
+<div class="section">
   <!-- ALKOHOLFREIE GETRÄNKE -->
-  <section class="section">
-    <div class="section-title">Alkoholfreie Getränke</div>
+  <div class="note"><b>Alkoholfreie Getränke</b></div>
 
-    <div class="menu-item">
-      <div class="item-text"><span class="item-name">Viva con Agua Mineralwasser 0,33l</span></div>
-      <span class="price">2,50 €</span>
-    </div>
+  <div class="item">
+    <span>Viva con Agua Mineralwasser „laut“ oder „leise“</span>
+    <span class="price">0,33l · 2,50 €</span>
+  </div>
+  <div class="item">
+    <span></span>
+    <span class="price">0,75l · 5,50 €</span>
+  </div>
 
-    <div class="menu-item">
-      <div class="item-text"><span class="item-name">Viva con Agua „laut“ oder „leise“ 0,75l</span></div>
-      <span class="price">5,50 €</span>
-    </div>
+  <div class="item"><span>Fritz Kola</span><span class="price">0,33l · 3,50 €</span></div>
+  <div class="item"><span>Fritz Kola Classic Light</span><span class="price">0,33l · 3,50 €</span></div>
 
-    <div class="menu-item">
-      <div class="item-text"><span class="item-name">Fritz Kola 0,33l</span></div>
-      <span class="price">3,50 €</span>
-    </div>
+  <div class="item">
+    <span>Fritz Limo Zitrone / Orange / Apfel-Kirsch / Holunder</span>
+    <span class="price">0,33l · 3,50 €</span>
+  </div>
 
-    <div class="menu-item">
-      <div class="item-text"><span class="item-name">Fritz Kola Classic Light 0,33l</span></div>
-      <span class="price">3,50 €</span>
-    </div>
+  <div class="item">
+    <span>Fritz Spritz – Bio Apfelschorle / Bio Traubenschorle / Bio Rhabarberschorle</span>
+    <span class="price">0,33l · 3,80 €</span>
+  </div>
 
-    <div class="menu-item">
-      <div class="item-text">
-        <span class="item-name">Fritz Limo 0,33l</span>
-        <span class="item-desc">verschiedene Sorten (z. B. Zitrone, Orange, Apfel-Kirsch-Holunder)</span>
-      </div>
-      <span class="price">3,50 €</span>
-    </div>
+  <div class="item"><span>Apfelsaft</span><span class="price">0,3l · 3,80 €</span></div>
+  <div class="item"><span>Orangensaft</span><span class="price">0,3l · 3,80 €</span></div>
 
-    <div class="menu-item">
-      <div class="item-text">
-        <span class="item-name">Fritz Spritz 0,33l</span>
-        <span class="item-desc">Bio-Apfelschorle, Traubenschorle oder Rhabarberschorle</span>
-      </div>
-      <span class="price">3,80 €</span>
-    </div>
+  <div class="item"><span>Vita Malz</span><span class="price">0,33l · 3,50 €</span></div>
+  <div class="item"><span>Schweppes Ginger Ale</span><span class="price">0,2l · 3,80 €</span></div>
+</div>
 
-    <div class="menu-item"><div class="item-text"><span class="item-name">Apfelsaft 0,3l</span></div><span class="price">3,80 €</span></div>
-    <div class="menu-item"><div class="item-text"><span class="item-name">Orangensaft 0,3l</span></div><span class="price">3,80 €</span></div>
-    <div class="menu-item"><div class="item-text"><span class="item-name">Vita Malz 0,33l</span></div><span class="price">3,50 €</span></div>
-    <div class="menu-item"><div class="item-text"><span class="item-name">Schweppes Ginger Ale 0,2l</span></div><span class="price">3,80 €</span></div>
-  </section>
-
-  <hr>
-
-
+<div class="section">
   <!-- BIER -->
-  <section class="section">
-    <div class="section-title">Bier</div>
+  <div class="note"><b>Bier</b></div>
 
-    <div class="menu-item"><div class="item-text"><span class="item-name">Becks Pils 0,33l</span></div><span class="price">3,50 €</span></div>
-    <div class="menu-item"><div class="item-text"><span class="item-name">Becks Green Lemon 0,33l</span></div><span class="price">3,50 €</span></div>
-    <div class="menu-item"><div class="item-text"><span class="item-name">Augustiner hell 0,5l</span></div><span class="price">4,80 €</span></div>
-    <div class="menu-item"><div class="item-text"><span class="item-name">Erdinger Weizenbier (hell) 0,5l</span></div><span class="price">4,80 €</span></div>
-    <div class="menu-item"><div class="item-text"><span class="item-name">Erdinger Weizenbier dunkel 0,5l</span></div><span class="price">4,80 €</span></div>
-    <div class="menu-item"><div class="item-text"><span class="item-name">Becks alkoholfrei 0,33l</span></div><span class="price">3,50 €</span></div>
-    <div class="menu-item"><div class="item-text"><span class="item-name">Becks Green Lemon alkoholfrei 0,33l</span></div><span class="price">3,50 €</span></div>
-    <div class="menu-item"><div class="item-text"><span class="item-name">Erdinger Weizenbier alkoholfrei 0,5l</span></div><span class="price">4,80 €</span></div>
-  </section>
+  <div class="item"><span>Beck’s Pils</span><span class="price">0,33l · 3,50 €</span></div>
+  <div class="item"><span>Beck’s Green Lemon</span><span class="price">0,33l · 3,50 €</span></div>
+  <div class="item"><span>Augustiner Hell</span><span class="price">0,5l · 4,80 €</span></div>
+  <div class="item"><span>Erdinger Weizenbier (Hefehell)</span><span class="price">0,5l · 4,80 €</span></div>
+  <div class="item"><span>Erdinger Weizenbier dunkel</span><span class="price">0,5l · 4,80 €</span></div>
 
-  <hr>
+  <div class="item"><span>Beck’s alkoholfrei</span><span class="price">0,33l · 3,50 €</span></div>
+  <div class="item"><span>Beck’s Green Lemon alkoholfrei</span><span class="price">0,33l · 3,50 €</span></div>
+  <div class="item"><span>Erdinger Weizenbier alkoholfrei</span><span class="price">0,5l · 4,80 €</span></div>
+</div>
 
-
+<div class="section">
   <!-- SPIRITUOSEN & LIKÖRE -->
-  <section class="section">
-    <div class="section-title">Spirituosen & Liköre</div>
+  <div class="note"><b>Spirituosen & Liköre</b></div>
 
-    <div class="menu-item">
-      <div class="item-text"><span class="item-name">Soju Chamisul 0,35l</span></div>
-      <span class="price">12,00 €</span>
-    </div>
+  <div class="item">
+    <span>Soju Chamisul 20 % vol. – klarer, farbloser Schnaps aus Korea</span>
+    <span class="price">0,35l · 12,00 €</span>
+  </div>
 
-    <div class="menu-item">
-      <div class="item-text"><span class="item-name">Ramazzotti 2cl</span></div>
-      <span class="price">3,00 €</span>
-    </div>
+  <div class="item"><span>Ramazzotti 30 % vol.</span><span class="price">2cl · 3,00 €</span></div>
+  <div class="item"><span></span><span class="price">4cl · 5,50 €</span></div>
 
-    <div class="menu-item">
-      <div class="item-text"><span class="item-name">Ramazzotti 4cl</span></div>
-      <span class="price">5,50 €</span>
-    </div>
+  <div class="item"><span>Afilador 40 % vol.</span><span class="price">2cl · 3,00 €</span></div>
+  <div class="item"><span></span><span class="price">4cl · 5,50 €</span></div>
+</div>
 
-    <div class="menu-item">
-      <div class="item-text"><span class="item-name">Afilador 2cl</span></div>
-      <span class="price">3,00 €</span>
-    </div>
+<div class="section">
+  <!-- WEIN -->
+  <div class="note"><b>Reiswein</b></div>
 
-    <div class="menu-item">
-      <div class="item-text"><span class="item-name">Afilador 4cl</span></div>
-      <span class="price">5,50 €</span>
-    </div>
-  </section>
+  <div class="item"><span>Makgeolli Reiswein 6 % vol.</span><span class="price">0,75l · 12,00 €</span></div>
 
-  <hr>
+  <br>
 
+  <div class="note"><b>Rotwein</b></div>
+  <div class="item"><span>Merlot Horgelus Rouge 12,5 % vol.</span><span class="price">0,2l · 6,50 €</span></div>
+  <div class="item"><span></span><span class="price">0,75l · 24,00 €</span></div>
 
-  <!-- WEIN & REISWEIN -->
-  <section class="section">
-    <div class="section-title">Reiswein & Wein</div>
+  <div class="item"><span>Rioja Conde Valdemar 13,5 % vol.</span><span class="price">0,2l · 6,50 €</span></div>
+  <div class="item"><span></span><span class="price">0,75l · 24,00 €</span></div>
 
-    <div class="menu-item">
-      <div class="item-text"><span class="item-name">Makgeolli Reiswein 0,75l</span></div>
-      <span class="price">12,00 €</span>
-    </div>
+  <div class="note"><b>Weißwein</b></div>
+  <div class="item"><span>Horgelus Blanc 11,5 % vol.</span><span class="price">0,2l · 6,50 €</span></div>
+  <div class="item"><span></span><span class="price">0,75l · 24,00 €</span></div>
 
-    <div class="menu-item">
-      <div class="item-text"><span class="item-name">Merlot Horgelus Rouge 0,2l</span></div>
-      <span class="price">6,50 €</span>
-    </div>
-    <div class="menu-item">
-      <div class="item-text"><span class="item-name">Merlot Horgelus Rouge 0,75l</span></div>
-      <span class="price">24,00 €</span>
-    </div>
+  <div class="item"><span>Pinot Grigio 12 % vol.</span><span class="price">0,2l · 6,50 €</span></div>
+  <div class="item"><span></span><span class="price">0,75l · 24,00 €</span></div>
 
-    <div class="menu-item">
-      <div class="item-text"><span class="item-name">Rioja Conde Valdemar 0,2l</span></div>
-      <span class="price">6,50 €</span>
-    </div>
-    <div class="menu-item">
-      <div class="item-text"><span class="item-name">Rioja Conde Valdemar 0,75l</span></div>
-      <span class="price">24,00 €</span>
-    </div>
+  <div class="note"><b>Rosé</b></div>
+  <div class="item"><span>Horgelus Rosé 11,5 % vol.</span><span class="price">0,2l · 6,50 €</span></div>
+  <div class="item"><span></span><span class="price">0,75l · 24,00 €</span></div>
 
-    <div class="menu-item">
-      <div class="item-text"><span class="item-name">Horgelus Blanc 0,2l</span></div>
-      <span class="price">6,50 €</span>
-    </div>
-    <div class="menu-item">
-      <div class="item-text"><span class="item-name">Horgelus Blanc 0,75l</span></div>
-      <span class="price">24,00 €</span>
-    </div>
+  <div class="item"><span>Weinschorle</span><span class="price">0,2l · 5,50 €</span></div>
+</div>
 
-    <div class="menu-item">
-      <div class="item-text"><span class="item-name">Pinot Grigio 0,2l</span></div>
-      <span class="price">6,50 €</span>
-    </div>
-    <div class="menu-item">
-      <div class="item-text"><span class="item-name">Pinot Grigio 0,75l</span></div>
-      <span class="price">24,00 €</span>
-    </div>
+<!-- ALLERGENE -->
+<div class="section small">
+<b>Allergenliste:</b><br>
+1 glutenhaltiges Getreide, 2 Krebstiere, 3 Eier, 4 Fisch, 5 Erdnüsse, 6 Sojabohnen,
+7 Milch, 8 Schalenfrüchte, 9 Sellerie, 10 Senf, 11 Sesam, 12 Schwefeldioxid,
+13 Lupinen, 14 Weichtiere<br><br>
 
-    <div class="menu-item">
-      <div class="item-text"><span class="item-name">Horgelus Rosé 0,2l</span></div>
-      <span class="price">6,50 €</span>
-    </div>
-    <div class="menu-item">
-      <div class="item-text"><span class="item-name">Horgelus Rosé 0,75l</span></div>
-      <span class="price">24,00 €</span>
-    </div>
+<b>Zusatzstoffe:</b><br>
+A Farbstoff, B Konservierungsstoff, C Antioxidationsmittel, D Geschmacksverstärker,
+E geschwefelt, F Süßungsmittel, G enthält Phenylalanin, H hoher Koffeingehalt
+</div>
 
-    <div class="menu-item">
-      <div class="item-text"><span class="item-name">Weinschorle 0,2l</span></div>
-      <span class="price">5,50 €</span>
-    </div>
-  </section>
-
-  <hr>
-
-
-  <!-- ALLERGENHINWEIS -->
-  <section class="section">
-    <div class="section-title">Allergenhinweis</div>
-    <p class="note">
-      Die Zubereitung erfolgt mit größter Sorgfalt. Allergene und Zusatzstoffe sind in der gedruckten Karte mit Zahlen und Buchstaben gekennzeichnet.
-      Bei Fragen zu Allergenen und Unverträglichkeiten hilft Ihnen unser Team gerne weiter.
-    </p>
-  </section>
+<div class="back">
+  <a href="website.html">Zurück zur Startseite</a>
+</div>
 
 </body>
 </html>
